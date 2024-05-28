@@ -1,5 +1,9 @@
-<script setup></script>
+<script setup>
+import Cards from './components/Cards.vue';
+</script>
 
-<template></template>
+<template>
+  <Cards />
+</template>
 
 <style scoped></style>
