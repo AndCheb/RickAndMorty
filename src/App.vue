@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import Cards from './components/Cards.vue';
 import Pagination from './components/Pagination.vue';
+import SearchByName from './components/SearchByName.vue';
 import { reactive, ref, watch } from 'vue';
 
 const urlCharacters = 'https://rickandmortyapi.com/api/character';
@@ -8,16 +9,15 @@ const urlEpisode = 'https://rickandmortyapi.com/api/episode';
 
 const episodes = ref(null);
 const data = ref(null);
-const search = ref(null);
 const currentPage = ref(1);
 const totalPages = ref(0);
 
-const showCaracters = reactive({
+const showCharacters = reactive({
   all: true,
   alive: true,
   dead: true,
   unknown: true,
-  selectedCaracter: null
+  selectedCharacter: null
 });
 
 const getData = async (page) => {
@@ -39,9 +39,9 @@ const getEpisodes = async (url) => {
   episodes.value = [res1.results, res2.results, res3.results];
 };
 
-const searchName = () => {
-  showCaracters.all = false;
-  showCaracters.selectedCaracter = search.value;
+const searchName = (inputText) => {
+  showCharacters.all = false;
+  showCharacters.selectedCharacter = inputText;
 };
 
 const changePage = (value) => {
@@ -58,11 +58,8 @@ watch(currentPage, (newValue) => {
 
 <template>
   <Pagination @page="changePage" :totalPages="totalPages" />
-
-  <input type="text" v-model="search" placeholder="Enter character name" />
-  <button type="button" @click="searchName">Search</button>
-
-  <Cards :data="data" :episodes="episodes" :showCaracters="showCaracters" />
+  <SearchByName @searchName="searchName" />
+  <Cards :data="data" :episodes="episodes" :showCharacters="showCharacters" />
 </template>
 
 <style scoped></style>

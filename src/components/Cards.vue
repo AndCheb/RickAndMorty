@@ -1,7 +1,7 @@
 <script setup>
 import Card from './Card.vue';
 
-const props = defineProps(['data', 'episodes', 'showCaracters']);
+const props = defineProps(['data', 'episodes', 'showCharacters']);
 
 function show(allEpisodes, characterEpisode) {
   let count = 0;
@@ -25,22 +25,22 @@ function show(allEpisodes, characterEpisode) {
 </script>
 
 <template>
-  <div v-if="showCaracters.all">
+  <div v-if="showCharacters.all">
     <p v-for="(item, index) in data" :key="index">
-      <div v-if="item.status === 'Alive' && showCaracters.alive">
+      <div v-if="item.status === 'Alive' && showCharacters.alive">
         <Card :item="item" :episodes="episodes" :show="show"/>
       </div>
-      <div v-if="item.status === 'Dead' && showCaracters.dead">
+      <div v-if="item.status === 'Dead' && showCharacters.dead">
         <Card :item="item" :episodes="episodes" :show="show"/>
       </div>
-      <div v-if="item.status === 'unknown' && showCaracters.unknown">
+      <div v-if="item.status === 'unknown' && showCharacters.unknown">
         <Card :item="item" :episodes="episodes" :show="show"/>
       </div>
     </p>
   </div>
   <div v-else>
     <p v-for="(item, index) in data" :key="index">
-    <div v-if="item.name.toLowerCase().includes(showCaracters.selectedCaracter.toLowerCase())">
+    <div v-if="item.name.toLowerCase().includes(showCharacters.selectedCharacter.toLowerCase())">
         <Card :item="item" :episodes="episodes" :show="show"/>
       </div>
       </p>
