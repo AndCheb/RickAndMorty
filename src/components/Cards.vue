@@ -1,5 +1,8 @@
-<script setup></script>
+<script setup>
+import { ref } from 'vue';
+const props = defineProps(['data']);
+</script>
 
-<template></template>
+<template>{{ props.data }}</template>
 
 <style scoped></style>
