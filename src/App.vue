@@ -37,7 +37,7 @@ watch(currentPage, (newValue) => {
   getData(newValue);
 });
 
-function show(allEpisodes, characterId, characterEpisode) {
+function show(allEpisodes, characterEpisode) {
   let count = 0;
 
   for (let key in allEpisodes) {
@@ -61,7 +61,7 @@ function show(allEpisodes, characterId, characterEpisode) {
     <p>{{item.name}}</p>
     <p>{{ item.id }}</p>
     <p v-for="(elem, index) in episodes" :key="index">
-      {{ show(elem, item.id, item.episode) }}
+      {{ show(elem, item.episode) }}
     </p>
   </p>
   <Cards />
