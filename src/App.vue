@@ -7,7 +7,7 @@ const urlEpisode = 'https://rickandmortyapi.com/api/episode';
 
 const episodes = ref(null);
 
-const getEps = async (url) => {
+const getEpisodes = async (url) => {
   const resp1 = await fetch(url);
   const resp2 = await fetch(`${url}?page=2`);
   const resp3 = await fetch(`${url}?page=3`);
@@ -19,7 +19,7 @@ const getEps = async (url) => {
   episodes.value = [res1.results, res2.results, res3.results];
 };
 
-getEps(urlEpisode);
+getEpisodes(urlEpisode);
 
 const data = ref(null);
 
