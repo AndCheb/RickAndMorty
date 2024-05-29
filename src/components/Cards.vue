@@ -61,7 +61,7 @@ function show(allEpisodes, characterEpisode) {
   </div>
 </template>
 
-<style>
+<style scoped>
 .cards-wrapper {
   display: flex;
   flex-wrap: wrap;
@@ -69,9 +69,5 @@ function show(allEpisodes, characterEpisode) {
   align-items: center;
   gap: 30px;
   padding-block: 50px;
-}
-
-div:empty {
-  display: none;
 }
 </style>
