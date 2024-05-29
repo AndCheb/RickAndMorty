@@ -86,11 +86,12 @@ watch(currentPage, (newValue) => {
 </script>
 
 <template>
-  <header>
+  <h1 class="title">The Rick and Morty Characters</h1>
+  <div class="header">
     <Pagination @page="changePage" :totalPages="totalPages" />
     <SearchByName @searchName="searchName" />
     <Filter :data="data" @filterCharacters="filterCharacters" @searchName="searchName" />
-  </header>
+  </div>
 
   <Cards
     :data="data"
@@ -100,4 +101,16 @@ watch(currentPage, (newValue) => {
   />
 </template>
 
-<style scoped></style>
+<style scoped>
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+
+.title {
+  margin-bottom: 30px;
+  text-align: center;
+}
+</style>

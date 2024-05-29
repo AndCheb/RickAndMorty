@@ -8,10 +8,12 @@ const selected = ref(null);
 </script>
 
 <template>
-  <label for="select">Select page </label>
-  <select v-model="selected" @change="$emit('page', selected)" id="select">
-    <option v-for="(item, index) in totalPages" :key="index">
-      {{ item }}
-    </option>
-  </select>
+  <div class="select-container">
+    <label for="select">Select page </label>
+    <select v-model="selected" @change="$emit('page', selected)" id="select">
+      <option v-for="(item, index) in totalPages" :key="index">
+        {{ item }}
+      </option>
+    </select>
+  </div>
 </template>

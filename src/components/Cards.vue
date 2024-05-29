@@ -25,29 +25,53 @@ function show(allEpisodes, characterEpisode) {
 </script>
 
 <template>
-  <div v-if="showCharacters.all">
-    <p v-for="(item, index) in data" :key="index">
-      <div v-if="item.status === 'Alive' && showCharacters.alive">
-        <Card :item="item" :episodes="episodes" :show="show"/>
-      </div>
-      <div v-if="item.status === 'Dead' && showCharacters.dead">
-        <Card :item="item" :episodes="episodes" :show="show"/>
-      </div>
-      <div v-if="item.status === 'unknown' && showCharacters.unknown">
-        <Card :item="item" :episodes="episodes" :show="show"/>
-      </div>
-    </p>
+  <div class="cards-wrapper" v-if="showCharacters.all">
+    <div v-for="(item, index) in data" :key="index">
+      <Card
+        v-if="item.status === 'Alive' && showCharacters.alive"
+        :item="item"
+        :episodes="episodes"
+        :show="show"
+      />
+      <Card
+        v-if="item.status === 'Dead' && showCharacters.dead"
+        :item="item"
+        :episodes="episodes"
+        :show="show"
+      />
+      <Card
+        v-if="item.status === 'unknown' && showCharacters.unknown"
+        :item="item"
+        :episodes="episodes"
+        :show="show"
+      />
+    </div>
   </div>
-  <div v-else>
-    <p v-for="(item, index) in data" :key="index">
-      <div v-if="item.name.toLowerCase().includes(showCharacters.selectedCharacter?.toLowerCase())">
-        <Card :item="item" :episodes="episodes" :show="show"/>
-      </div>
-      <div v-if="item.status === filterValue">
-        <Card :item="item" :episodes="episodes" :show="show"/>
-      </div>
-    </p>
+  <div class="cards-wrapper" v-else>
+    <div v-for="(item, index) in data" :key="index">
+      <Card
+        v-if="item.name.toLowerCase().includes(showCharacters.selectedCharacter?.toLowerCase())"
+        :item="item"
+        :episodes="episodes"
+        :show="show"
+      />
+
+      <Card v-if="item.status === filterValue" :item="item" :episodes="episodes" :show="show" />
+    </div>
   </div>
 </template>
 
-<style scoped></style>
+<style>
+.cards-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  padding-block: 50px;
+}
+
+div:empty {
+  display: none;
+}
+</style>
