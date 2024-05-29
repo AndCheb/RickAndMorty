@@ -17,7 +17,7 @@ const getEps = async (url) => {
   const res3 = await resp3.json();
 
   episodes.value = [res1.results, res2.results, res3.results];
-}
+};
 
 getEps(urlEpisode);
 
@@ -36,45 +36,19 @@ getData(currentPage);
 watch(currentPage, (newValue) => {
   getData(newValue);
 });
-
-function show(allEpisodes, characterEpisode) {
-  let count = 0;
-
-  for (let key in allEpisodes) {
-    for (let el in allEpisodes[key]) {
-      if (count) {
-        count = 0;
-        return allEpisodes[key][el];
-      }
-
-      if (typeof allEpisodes[key][el] === 'number' && allEpisodes[key][el] === +characterEpisode[0].slice(-3).replace(/\D/gi, '')) {
-        count++;
-      }
-    }
-  }
-}
 </script>
 
 <template>
-  <p v-for="(item, index) in data" :key="index">
-    <img :src="item.image" alt="" />
-    <p>{{item.name}}</p>
-    <p>{{ item.id }}</p>
-    <p v-for="(elem, index) in episodes" :key="index">
-      {{ show(elem, item.episode) }}
-    </p>
-  </p>
-  <Cards />
+  <Cards :data="data" :episodes="episodes" />
 
-   <select v-model="currentPage">
+  <select v-model="currentPage">
     <option disabled value="">Select page</option>
     <option>1</option>
     <option>2</option>
-    <option>28</option>
+    <option>38</option>
   </select>
 
-  <p>Select: {{ currentPage }}</p> 
-
+  <p>Select: {{ currentPage }}</p>
 </template>
 
 <style scoped></style>
