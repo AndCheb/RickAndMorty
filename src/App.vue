@@ -3,14 +3,13 @@ import Cards from './components/Cards.vue';
 import Pagination from './components/Pagination.vue';
 import SearchByName from './components/SearchByName.vue';
 import Filter from './components/Filter.vue';
-import { reactive, ref, watch } from 'vue';
+import { reactive, ref } from 'vue';
 
 const urlCharacters = 'https://rickandmortyapi.com/api/character';
 const urlEpisode = 'https://rickandmortyapi.com/api/episode';
 
 const episodes = ref(null);
 const data = ref(null);
-const currentPage = ref(1);
 const totalPages = ref(0);
 const filterValue = ref(null);
 
@@ -69,20 +68,16 @@ const searchName = (inputText) => {
     filterCharacters(null);
   } else {
     showCharacters.selectedCharacter = null;
-    filterCharacters('All');
   }
 };
 
 const changePage = (value) => {
-  currentPage.value = value;
+  filterCharacters('All');
+  getData(value);
 };
 
 getEpisodes(urlEpisode);
-getData(currentPage);
-
-watch(currentPage, (newValue) => {
-  getData(newValue);
-});
+getData(1);
 </script>
 
 <template>
