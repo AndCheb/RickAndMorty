@@ -2,6 +2,7 @@
 import Cards from './components/Cards.vue';
 import Pagination from './components/Pagination.vue';
 import SearchByName from './components/SearchByName.vue';
+import Filter from './components/Filter.vue';
 import { reactive, ref, watch } from 'vue';
 
 const urlCharacters = 'https://rickandmortyapi.com/api/character';
@@ -11,6 +12,7 @@ const episodes = ref(null);
 const data = ref(null);
 const currentPage = ref(1);
 const totalPages = ref(0);
+const filterValue = ref(null);
 
 const showCharacters = reactive({
   all: true,
@@ -39,9 +41,36 @@ const getEpisodes = async (url) => {
   episodes.value = [res1.results, res2.results, res3.results];
 };
 
+const filterCharacters = (value) => {
+  filterValue.value = value;
+
+  if (value === 'Alive' || value === 'Dead' || value === 'unknown') {
+    showCharacters.selectedCharacter = null;
+  }
+
+  if (value === 'All') {
+    showCharacters.all = true;
+    showCharacters.alive = true;
+    showCharacters.dead = true;
+    showCharacters.unknown = true;
+    showCharacters.selectedCharacter = null;
+  } else {
+    showCharacters.all = false;
+    showCharacters.alive = false;
+    showCharacters.dead = false;
+    showCharacters.unknown = false;
+    showCharacters[value] = true;
+  }
+};
+
 const searchName = (inputText) => {
-  showCharacters.all = false;
-  showCharacters.selectedCharacter = inputText;
+  if (inputText !== 'All') {
+    showCharacters.selectedCharacter = inputText;
+    filterCharacters(null);
+  } else {
+    showCharacters.selectedCharacter = null;
+    filterCharacters('All');
+  }
 };
 
 const changePage = (value) => {
@@ -57,9 +86,18 @@ watch(currentPage, (newValue) => {
 </script>
 
 <template>
-  <Pagination @page="changePage" :totalPages="totalPages" />
-  <SearchByName @searchName="searchName" />
-  <Cards :data="data" :episodes="episodes" :showCharacters="showCharacters" />
+  <header>
+    <Pagination @page="changePage" :totalPages="totalPages" />
+    <SearchByName @searchName="searchName" />
+    <Filter :data="data" @filterCharacters="filterCharacters" @searchName="searchName" />
+  </header>
+
+  <Cards
+    :data="data"
+    :episodes="episodes"
+    :showCharacters="showCharacters"
+    :filterValue="filterValue"
+  />
 </template>
 
 <style scoped></style>

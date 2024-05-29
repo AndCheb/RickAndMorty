@@ -1,7 +1,7 @@
 <script setup>
 import Card from './Card.vue';
 
-const props = defineProps(['data', 'episodes', 'showCharacters']);
+const props = defineProps(['data', 'episodes', 'showCharacters', 'filterValue']);
 
 function show(allEpisodes, characterEpisode) {
   let count = 0;
@@ -40,12 +40,14 @@ function show(allEpisodes, characterEpisode) {
   </div>
   <div v-else>
     <p v-for="(item, index) in data" :key="index">
-    <div v-if="item.name.toLowerCase().includes(showCharacters.selectedCharacter.toLowerCase())">
+      <div v-if="item.name.toLowerCase().includes(showCharacters.selectedCharacter?.toLowerCase())">
         <Card :item="item" :episodes="episodes" :show="show"/>
       </div>
-      </p>
+      <div v-if="item.status === filterValue">
+        <Card :item="item" :episodes="episodes" :show="show"/>
+      </div>
+    </p>
   </div>
-  
 </template>
 
 <style scoped></style>
