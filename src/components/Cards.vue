@@ -1,5 +1,7 @@
 <script setup>
-const props = defineProps(['data', 'episodes']);
+import Card from './Card.vue';
+
+const props = defineProps(['data', 'episodes', 'showCaracters']);
 
 function show(allEpisodes, characterEpisode) {
   let count = 0;
@@ -23,20 +25,27 @@ function show(allEpisodes, characterEpisode) {
 </script>
 
 <template>
-  <p v-for="(item, index) in data" :key="index">
-    <img :src="item.image" alt="" />
-    <p>{{item.name}}</p>
-    <span v-if="item.status == 'Alive'"> !!! </span>
-    <span v-else-if="item.status == 'Dead'"> ??? </span>
-    <span v-else> &&& </span>
-    <span>{{ item.status }} - {{ item.species }}</span>
-    <h2>Last known location:</h2>
-    <p>{{ item.location.name }}</p>
-    <h2>First seen in:</h2>
-    <p v-for="(elem, index) in episodes" :key="index">
-       {{ show(elem, item.episode) }}
+  <div v-if="showCaracters.all">
+    <p v-for="(item, index) in data" :key="index">
+      <div v-if="item.status === 'Alive' && showCaracters.alive">
+        <Card :item="item" :episodes="episodes" :show="show"/>
+      </div>
+      <div v-if="item.status === 'Dead' && showCaracters.dead">
+        <Card :item="item" :episodes="episodes" :show="show"/>
+      </div>
+      <div v-if="item.status === 'unknown' && showCaracters.unknown">
+        <Card :item="item" :episodes="episodes" :show="show"/>
+      </div>
     </p>
-  </p>
+  </div>
+  <div v-else>
+    <p v-for="(item, index) in data" :key="index">
+    <div v-if="item.name.toLowerCase().includes(showCaracters.selectedCaracter.toLowerCase())">
+        <Card :item="item" :episodes="episodes" :show="show"/>
+      </div>
+      </p>
+  </div>
+  
 </template>
 
 <style scoped></style>
